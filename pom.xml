@@ -1,0 +1,69 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ru.mirea</groupId>
+	<artifactId>root-weather</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>wservice</module>
+		<module>wdataAPI</module>
+		<module>wdata</module>
+		<module>wserver</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>ru.mirea.weather.App</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id> <!-- this is used for inheritance merges -->
+						<phase>package</phase> <!-- bind to the packaging phase -->
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>ru.mirea.weather</groupId>
+			<artifactId>weather-service</artifactId>
+			<version>1.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ru.mirea.data</groupId>
+			<artifactId>data-source</artifactId>
+			<version>1.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ru.mirea.data</groupId>
+			<artifactId>data-source-api</artifactId>
+			<version>1.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ru.mirea.server</groupId>
+			<artifactId>netty-server</artifactId>
+			<version>1.0</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+</project>

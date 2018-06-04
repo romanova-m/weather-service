@@ -1,0 +1,22 @@
+<project>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ru.mirea.server</groupId>
+	<artifactId>netty-server</artifactId>
+	<version>1.0</version>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>4.1.25.Final</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ru.mirea.data</groupId>
+			<artifactId>data-source</artifactId>
+			<version>1.0</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+</project>
