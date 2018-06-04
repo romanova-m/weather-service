@@ -21,7 +21,7 @@ public class CustomQueueTest {
 	testQueue.add(task);
 	testQueue.add(task);
 	assertFalse(testQueue.add(task));
-        assertEquals(testQueue.myQueue.size(), testSize);
+	assertEquals(testQueue.myQueue.size(), testSize);
     }
 
     @Test
@@ -39,7 +39,6 @@ public class CustomQueueTest {
         assertFalse(testQueue.isEmpty());
         testQueue.myQueue.poll();
         assertTrue(testQueue.isEmpty());
-        
     }
 
     @Test
@@ -48,5 +47,4 @@ public class CustomQueueTest {
         testQueue.myQueue.add(task);
         assertTrue(testQueue.size() == 1);
     }
-    
 }

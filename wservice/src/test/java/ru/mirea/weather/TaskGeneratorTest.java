@@ -10,20 +10,19 @@ public class TaskGeneratorTest {
     private  int testSize;
 
     public TaskGeneratorTest() {
-	testSize = 3;
-	testQueue = new CustomQueue(testSize);
+        testSize = 3;
+        testQueue = new CustomQueue(testSize);
     }
 
     @Before
     public void setUp() {
-	Thread genStream = new Thread(new TaskGenerator(testQueue));
-	genStream.start();
-	try {
-	    Thread.sleep(100);
-	} catch (InterruptedException e) {}
-	genStream.interrupt();
+        Thread genStream = new Thread(new TaskGenerator(testQueue));
+        genStream.start();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {}
+        genStream.interrupt();
     }
-	    
 
     @Test
     public void queueIsNotEmpty() {

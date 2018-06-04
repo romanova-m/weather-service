@@ -14,9 +14,7 @@ public class EchoServerInitializer extends ChannelInitializer<SocketChannel>{
     @Override
     public void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline p = ch.pipeline();
-        /*if (sslCtx != null) {
-            p.addLast(sslCtx.newHandler(ch.alloc()));
-        }*/
+
         p.addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
         p.addLast("decoder", new StringDecoder());
         p.addLast("encoder", new StringEncoder());

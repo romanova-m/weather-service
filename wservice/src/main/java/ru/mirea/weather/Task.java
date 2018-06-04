@@ -2,6 +2,7 @@ package ru.mirea.weather;
 import java.util.Date;
 
 public class Task {
+
     public int id;
     public Date date;
     public String city;

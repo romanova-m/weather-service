@@ -9,7 +9,7 @@ public class CustomQueue {
     protected int size;
     
     CustomQueue(int size) {
-        myQueue = new LinkedList<Task>();
+        myQueue = new LinkedList<>();
         this.size = size;
     }
     

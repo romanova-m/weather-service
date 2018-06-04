@@ -27,7 +27,7 @@ public class TaskExecutor implements Runnable{
         Task task = inQueue.poll();
 
         if (task != null) {
-            task.weather = DataSource.Weather.getByCity(task.city);
+            task.weather = DataSource.WEATHER.getByCity(task.city);
             outQueue.add(task);
         }
     }

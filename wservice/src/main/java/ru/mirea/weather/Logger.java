@@ -22,7 +22,8 @@ public class Logger implements Runnable {
     private void print(){
         if (!outQueue.isEmpty()) {
             Task task = outQueue.poll();
-            System.out.println(task.id + " " + task.date + " " + task.city + " " + task.weather + " ");
+            System.out.println(task.id + " " + task.date + " " +
+                    task.city + " " + task.weather + " ");
         }            
     }
 }

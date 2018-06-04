@@ -1,7 +1,6 @@
 package ru.mirea.server;
 
 import ru.mirea.data.DataSource;
-import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
@@ -11,9 +10,6 @@ import io.netty.util.concurrent.EventExecutor;
 import java.util.Date;
 import io.netty.channel.Channel;
 
-/**
- * Handler implementation for the echo server.
- */
 public class EchoServerHandler extends SimpleChannelInboundHandler<String>{
 
 	private static final ChannelGroup channels = new DefaultChannelGroup(
@@ -24,7 +20,7 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<String>{
 	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
             Channel incoming = ctx.channel();
 		ctx.channel().write("["+incoming.remoteAddress()+ "] ID" + ++id + " " +
-				new Date() + ":" + msg + " " + DataSource.Weather.getByCity(msg)+ "\r\n");
+				new Date() + ":" + msg + " " + DataSource.WEATHER.getByCity(msg)+ "\r\n");
 		ctx.flush();
 	}
 
