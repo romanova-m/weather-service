@@ -8,7 +8,7 @@ public class Task {
     public String city;
     public String weather;
 
-    Task(int id, String city) {
+    public Task(int id, String city) {
         this.id = id;
         this.date = new Date();
         this.city = city;
