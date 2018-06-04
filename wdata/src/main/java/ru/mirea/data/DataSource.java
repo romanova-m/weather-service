@@ -8,23 +8,23 @@ import java.util.Set;
 
 
 
-public class DataSource implements DataSourceAPI {
+public enum DataSource implements DataSourceAPI {
+        Weather();
+        Map<String, String> hashMap = new HashMap<String, String>();
 
-	private Map<String, String> cities = new HashMap();
-
-	public DataSource () {
-		cities.put("Moscow","+15");
-		cities.put("Perm","+5");
-		cities.put("Omsk","+1");
-		cities.put("Sochi","+25");
-		cities.put("Vologda","+5");
-	}
+	private DataSource(){
+         this.hashMap.put("Omsk", "+1");
+         this.hashMap.put("Perm", "+5");
+         this.hashMap.put("Moscow", "+15");
+         this.hashMap.put("Sochi", "+25");
+         this.hashMap.put("Vologda", "+5");
+     }
 
 	public Set <String> cities () {
-		return this.cities.keySet();
+		return this.hashMap.keySet();
 	}
 
 	public String getByCity (String city) {
-		return this.cities.get(city);
+		return this.hashMap.get(city);
 	}
 }
