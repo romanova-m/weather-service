@@ -1,4 +1,4 @@
-package ru.mirea.server;
+package ru.mirea.weather;
 
 import ru.mirea.data.DataSource;
 import ru.mirea.weather.CustomQueue;
