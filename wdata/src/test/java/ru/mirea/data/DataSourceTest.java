@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Екатерина
+ * @author ?????????
  */
 public class DataSourceTest {
     
