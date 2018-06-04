@@ -1,71 +1,30 @@
 package ru.mirea.data;
 
 import ru.mirea.data.DataSourceAPI;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
-import java.sql.*;
-import java.util.HashSet;
 
 
-public enum DataSource implements DataSourceAPI {
-    Weather();
-	
-	Connection conn;
 
-	DataSource() {
-        try {
-            initDB();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            }
-        }
+public class DataSource implements DataSourceAPI {
 
-	public String getByCity(String city){
-        try {
-            String Result;
-            synchronized (conn) {
-                PreparedStatement ps = conn.prepareStatement("SELECT Weather FROM WeatherForecast WHERE City ='" + city + "'");
-                ResultSet rs = ps.executeQuery();
-                rs.beforeFirst();
-                rs.next();
-                Result = rs.getString("Weather");
-            }
-            return Result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+	private Map<String, String> cities = new HashMap();
 
-    public Set<String> cities(){
-        try {
-            Set<String> result = new HashSet<>();
-            synchronized (conn) {
-                PreparedStatement ps = conn.prepareStatement("SELECT City FROM WeatherForecast");
-                ResultSet rs = ps.executeQuery();
-                rs.beforeFirst();
-                while (rs.next()) {
-                    result.add(rs.getString("City"));
-                }
-            }
-            return  result;
+	public DataSource () {
+		cities.put("Moscow","+15");
+		cities.put("Perm","+5");
+		cities.put("Omsk","+1");
+		cities.put("Sochi","+25");
+		cities.put("Vologda","+5");
+	}
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+	public Set <String> cities () {
+		return this.cities.keySet();
+	}
 
-    }
-
-    private void initDB() throws SQLException{
-        conn = DriverManager.getConnection("jdbc:h2:~/WeatherDB/WeatherDB", "sa", "");
-
-        PreparedStatement ps = conn.prepareStatement("DROP TABLE WeatherForecast IF EXISTS");
-        ps.execute();
-
-        ps = conn.prepareStatement("CREATE TABLE WeatherForecast (City VARCHAR, Weather VARCHAR )");
-        ps.execute();
-
-        ps = conn.prepareStatement("INSERT INTO WeatherForecast VALUES ('Omsk','+1'),('Moscow','+15'),('Perm','+5'),('Sochi','+25'),('Vologda','+5')");
-        ps.execute();
-    }
+	public String getByCity (String city) {
+		return this.cities.get(city);
+	}
 }
