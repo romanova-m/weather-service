@@ -1,4 +1,4 @@
-package ru.mirea.weather;
+package ru.mirea.server;
 
 import ru.mirea.data.DataSource;
 import ru.mirea.server.EchoClient;

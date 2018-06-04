@@ -28,12 +28,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>ru.mirea.server</groupId>
-			<artifactId>netty-server</artifactId>
-			<version>1.0</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>ru.mirea.data</groupId>
 			<artifactId>data-source</artifactId>
 			<version>1.0</version>
