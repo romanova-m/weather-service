@@ -2,34 +2,32 @@ package ru.mirea.weather;
 
 import ru.mirea.data.DataSource;
 
+
 public class TaskGenerator implements Runnable {
+    private CustomQueue inQueue;
+    private int id = 0;
 
-    DataSource dc;
-    CustomQueue queue;
-    public static int counter;
-
-    public TaskGenerator(CustomQueue queueArg, DataSource dc){
-        counter = 0;
-	this.dc = dc;
-        this.queue = queueArg;
+    public TaskGenerator(CustomQueue inQueue) {
+        this.inQueue = inQueue;
     }
 
-    public synchronized void run() {
-        while(true) {
-            if (!queue.isFull()) {
-                synchronized (queue) {
-                    if (!queue.isFull()) 
-                    queue.push(new Task(++counter, dc));
+    @Override
+    public void run() {
+        try {
+            while (!Thread.interrupted()) {
+                for (String city : DataSource.Weather.cities()) {
+                    putTaskInQueue(city);
+                    Thread.sleep(10);
                 }
             }
-            try {
-                wait(5);
-            }
-            catch(InterruptedException e){
-                    System.out.println("THREAD GENERATOR WAS INTERRUPTED");
-                    return;
-            }
-        }
+        } catch (InterruptedException e) {}
     }
+
+    private void putTaskInQueue(String city) {
+        Task task = new Task(id, city);
+        inQueue.add(task);
+        id++;
+    }
+
 }
 

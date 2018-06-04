@@ -1,31 +1,28 @@
 package ru.mirea.weather;
 
-public class Logger implements Runnable{
+public class Logger implements Runnable {
 
-    CustomQueue queue;
-    Task task;
-    public static int counter;
+    CustomQueue outQueue;
 
-    public Logger(CustomQueue queueArg) {
-        counter = 0;
-        queue = queueArg;
+    public Logger(CustomQueue outQueue) {
+        this.outQueue = outQueue;
     }
 
-    public synchronized void run() {
-        while(true) {
-            if (!queue.isEmpty()) {
-                synchronized(queue) {
-                    if (!queue.isEmpty())
-                    task = queue.pull();
-                }
-                counter++;
-                System.out.println("ID: " + task.id + "\n\tDate: " + task.date.toString() + "; \n\tcity: " +
-                        task.city + "; \n\tweather: " + task.weather + "\n");
-            }
-            if (Thread.interrupted()) {
-                System.out.println("LOGGER WAS INTERRUPTED");
-                return;
+    @Override
+    public void run() {
+        try {
+            while (!Thread.interrupted()) {
+                print();
+                Thread.sleep(10);
             }
         }
+        catch (InterruptedException e) {}
+    }
+
+    private void print(){
+        if (!outQueue.isEmpty()) {
+            Task task = outQueue.poll();
+            System.out.println(task.id + " " + task.date + " " + task.city + " " + task.weather + " ");
+        }            
     }
 }

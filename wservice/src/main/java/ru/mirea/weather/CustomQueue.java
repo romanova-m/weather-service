@@ -1,33 +1,35 @@
 package ru.mirea.weather;
 
-import java.util.LinkedList;
 import java.util.Queue;
+import java.util.LinkedList;
 
 public class CustomQueue {
-
-    private Queue list = new LinkedList();
-    private int capacity = 100;
-    private int size = 0;
-
-    void push (Task task) {
-        list.add(task);
-        size++;
+    
+    protected Queue<Task> myQueue;
+    protected int size;
+    
+    CustomQueue(int size) {
+        myQueue = new LinkedList<Task>();
+        this.size = size;
     }
-
-    Task pull() {
-        if (size != 0) {
-            size--;
-            return (Task)list.remove();
+    
+    public synchronized boolean add(Task task) {
+        if (myQueue.size() < size)  {
+            myQueue.add(task);    
+            return true;
         }
-        else return null;
+        else return false;
+    }   
+    
+    public synchronized Task poll() {
+            return myQueue.poll();
     }
-
-    boolean isEmpty () {
-        return (size == 0? true : false);
+    
+    public synchronized boolean isEmpty() {
+        return myQueue.isEmpty();
     }
-
-    boolean isFull () {
-        return (size == capacity);
+    
+    public synchronized int size() {
+        return myQueue.size();
     }
-
 }

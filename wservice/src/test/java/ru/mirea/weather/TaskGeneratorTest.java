@@ -1,31 +1,37 @@
 package ru.mirea.weather;
 
 import org.junit.Test;
-import ru.mirea.data.DataSource;
-
+import org.junit.Before;
 import static org.junit.Assert.*;
 
 public class TaskGeneratorTest {
 
+    private CustomQueue testQueue;
+    private  int testSize;
+
+    public TaskGeneratorTest() {
+	testSize = 3;
+	testQueue = new CustomQueue(testSize);
+    }
+
+    @Before
+    public void setUp() {
+	Thread genStream = new Thread(new TaskGenerator(testQueue));
+	genStream.start();
+	try {
+	    Thread.sleep(100);
+	} catch (InterruptedException e) {}
+	genStream.interrupt();
+    }
+	    
+
     @Test
-    public void runTest() {
+    public void queueIsNotEmpty() {
+	assertFalse(testQueue.isEmpty());
+    }
 
-	DataSource dc = new DataSource();
-        CustomQueue inQueue = new CustomQueue();
-        TaskGenerator taskGenerator = new TaskGenerator(inQueue, dc);
-
-        Thread generatorStream = new Thread(taskGenerator);
-        generatorStream.start();
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        generatorStream.interrupt();
-
-        assertTrue(!inQueue.isEmpty());
-        assertTrue(inQueue.pull() != null);
+    @Test
+    public void queueSizeIsCorrect() {
+	assertTrue(testQueue.size() <= testSize);
     }
 }

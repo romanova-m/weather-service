@@ -2,35 +2,43 @@ package ru.mirea.weather;
 
 import org.junit.Test;
 
+import org.junit.Test;
+import org.junit.Before;
 import static org.junit.Assert.*;
-import ru.mirea.data.DataSource;
 
 public class TaskExecutorTest {
 
-    private int maxSize = 100;
-    DataSource dc = new DataSource();
-    private Task task = new Task(0, dc);
+    CustomQueue inQueue;
+    CustomQueue outQueue;
+    int testSize;
+    Task task;
+
+    public TaskExecutorTest() {
+	testSize = 3;
+	task = new Task(1, "Moscow");
+    }
+
+    @Before
+    public void set () {
+	inQueue = new CustomQueue(testSize);
+	outQueue = new CustomQueue(testSize);
+    }
 
     @Test
-    public void runTest() {
-
-        CustomQueue inQueue = new CustomQueue();
-        inQueue.push(task);
-
-        CustomQueue outQueue = new CustomQueue();
-        TaskExecutor taskExecutor = new TaskExecutor(inQueue,outQueue, dc);
-        Thread executorStream = new Thread(taskExecutor);
-
-        executorStream.start();
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        executorStream.interrupt();
-
-        assertTrue(inQueue.isEmpty());
-        outQueue.pull();
-        assertTrue(outQueue.isEmpty());
+    public void inQueueIsEmpty() {
+	assertTrue(inQueue.isEmpty());
     }
+
+    @Test
+    public void outQueueContainsOneTask() {
+	inQueue.add(task);
+	Thread excStream = new Thread(new TaskExecutor(inQueue, outQueue));
+	excStream.start();
+	try {
+	    excStream.sleep(1000);
+	} catch (InterruptedException e) {}
+	excStream.interrupt();
+	assertEquals(outQueue.size(), 1);
+    }
+    
 }
