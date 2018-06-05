@@ -9,25 +9,30 @@ import java.util.Random;
 
 public class TaskGenerator implements Runnable {
     Channel channel;
+    int id;
 
     public TaskGenerator(Channel channel) {
         this.channel = channel;
+        this.id = 0;
     }
 
     @Override
     public void run() {
-        int id = 0;
         try {
         while (!Thread.interrupted()) {
-            Random rand = new Random();
-            String city = DataSource.WEATHER.cities().toArray()[rand.nextInt(
-                    DataSource.WEATHER.cities().size() - 1) + 0].toString();
-            Task task = new Task(++id, city);
-            channel.write(task);
-            channel.flush();
+            generate();
             Thread.sleep(5);
             }
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {}              
+    }
+    
+    private void generate() {
+        Random rand = new Random();
+        String city = DataSource.WEATHER.cities().toArray()[rand.nextInt(
+                DataSource.WEATHER.cities().size() - 1) + 0].toString();
+        Task task = new Task(++id, city);
+        channel.write(task);
+        channel.flush();
     }
 }
 
