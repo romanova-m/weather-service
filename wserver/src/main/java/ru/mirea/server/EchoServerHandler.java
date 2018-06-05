@@ -25,22 +25,29 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<Task>{
         static int size = 100;
 
         private static CustomQueue inQueue = new CustomQueue(size);
-	private static CustomQueue outQueue = new CustomQueue(size);
-        
-        public EchoServerHandler() {
-            
+		private static CustomQueue outQueue = new CustomQueue(size);
+
 	TaskExecutor te = new TaskExecutor(inQueue, outQueue);
 	Logger lg = new Logger(outQueue);
 	Thread tte = new Thread(te);
 	Thread tlg = new Thread(lg);
+
+	@Override
+	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+		tte.interrupt();
+		tlg.interrupt();
+		super.channelUnregistered(ctx);
+	}
+
+	public EchoServerHandler() {
 	tte.start();
 	tlg.start();
-	try {
+	/*try {
 		Thread.sleep(1000);
 	} catch (InterruptedException e) {
 		e.printStackTrace();
+	}*/
 	}
-}
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Task msg) throws Exception {
@@ -56,7 +63,6 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<Task>{
 		ctx.channel().writeAndFlush("["+incoming.remoteAddress()+ "] ID" + ++id + " " +
 				new Date() + ":" + msg + " " + DataSource.WEATHER.getByCity(msg)+ "\r\n");
 */
-
 	}
 
 
