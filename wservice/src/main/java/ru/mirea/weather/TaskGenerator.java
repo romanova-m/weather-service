@@ -23,8 +23,7 @@ public class TaskGenerator implements Runnable {
             String city = DataSource.WEATHER.cities().toArray()[rand.nextInt(
                     DataSource.WEATHER.cities().size() - 1) + 0].toString();
             Task task = new Task(++id, city);
-            System.out.println(task.id + " " + task.city);
-            channel.write(task.city + "\r\n");
+            channel.write(task);
             channel.flush();
             Thread.sleep(5);
             }
