@@ -38,13 +38,6 @@ public final class EchoClient implements Runnable{
             Thread.sleep(3000);
             genStream.interrupt();
 
-            /*КАК ПОСЫЛАТЬ ТАСКИ -----------------------------------
-            Task task = new Task(0, "Moscow");
-
-            channel.write(task);
-            channel.flush();
-            КАК ПОСЫЛАТЬ ТАСКИ -----------------------------------
-            */
 
             // Wait until the connection is closed.
             channel.closeFuture().sync();
