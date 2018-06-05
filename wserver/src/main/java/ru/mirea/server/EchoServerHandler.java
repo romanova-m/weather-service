@@ -25,15 +25,15 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<Task>{
         
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Task msg) throws Exception {
-<<<<<<< HEAD
+
 		/*Channel incoming = ctx.channel();*/
                 
                 inQueue.add(new TaskWrapper(ctx, msg));
                 
 		System.out.println("Task city:" + msg.city);
-=======
+
 		Channel incoming = ctx.channel();
->>>>>>> 09419858735b562435c99f587e7c101e400dbc66
+
                 
 		ctx.channel().write(msg);
                 System.out.println("TaskWrapper: " + inQueue.poll().task.city);
