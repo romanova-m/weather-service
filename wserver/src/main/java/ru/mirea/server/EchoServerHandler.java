@@ -13,19 +13,26 @@ import java.math.BigInteger;
 import java.util.Date;
 import io.netty.channel.Channel;
 import ru.mirea.weather.Task;
+import ru.mirea.weather.CustomQueue;
+import ru.mirea.weather.TaskWrapper;
 
 public class EchoServerHandler extends SimpleChannelInboundHandler<Task>{
 
 	private static final ChannelGroup channels = new DefaultChannelGroup(
 			(EventExecutor) new DefaultEventExecutor());
         int id = 0;
-
+        CustomQueue inQueue = new CustomQueue(1000);
+        
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Task msg) throws Exception {
-		Channel incoming = ctx.channel();
+		/*Channel incoming = ctx.channel();*/
+                
+                inQueue.add(new TaskWrapper(ctx, msg));
+                
 		System.out.println("Task city:" + msg.city);
                 
 		ctx.channel().write(msg);
+                System.out.println("TaskWrapper: " + inQueue.poll().task.city);
 		ctx.flush();
 /*
 	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
