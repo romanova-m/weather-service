@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class LoggerTest {
 
-    CustomQueue testQueue;
+   /* CustomQueue testQueue;
     int testSize;
 
     public LoggerTest() {
@@ -31,5 +31,5 @@ public class LoggerTest {
     @Test
     public void testQueueIsEmpty() {
 	assertTrue(testQueue.isEmpty());
-    }
+    }*/
 }

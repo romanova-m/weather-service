@@ -12,26 +12,39 @@ import io.netty.util.concurrent.EventExecutor;
 import java.math.BigInteger;
 import java.util.Date;
 import io.netty.channel.Channel;
-import ru.mirea.weather.Task;
+import ru.mirea.weather.*;
 
 public class EchoServerHandler extends SimpleChannelInboundHandler<Task>{
 
-	private static final ChannelGroup channels = new DefaultChannelGroup(
+		private static final ChannelGroup channels = new DefaultChannelGroup(
 			(EventExecutor) new DefaultEventExecutor());
         int id = 0;
+        static int size = 100;
+
+        private static CustomQueue inQueue = new CustomQueue(size);
+		private static CustomQueue outQueue = new CustomQueue(size);
+public EchoServerHandler() {
+	TaskExecutor te = new TaskExecutor(inQueue, outQueue);
+	Logger lg = new Logger(outQueue);
+	Thread tte = new Thread(te);
+	Thread tlg = new Thread(lg);
+	tte.run();
+	tlg.run();
+	try {
+		Thread.sleep(10000);
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+}
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Task msg) throws Exception {
-		Channel incoming = ctx.channel();
-                
-		ctx.channel().write(msg);
-		ctx.flush();
-/*
-	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-            Channel incoming = ctx.channel();
-		ctx.channel().writeAndFlush("["+incoming.remoteAddress()+ "] ID" + ++id + " " +
-				new Date() + ":" + msg + " " + DataSource.WEATHER.getByCity(msg)+ "\r\n");
-*/
+		//Channel incoming = ctx.channel();
+
+		synchronized (inQueue) {
+			inQueue.add(new TaskWrapper(msg, ctx));
+		}
+
 	}
 
 

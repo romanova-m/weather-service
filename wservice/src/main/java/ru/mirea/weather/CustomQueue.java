@@ -5,15 +5,15 @@ import java.util.LinkedList;
 
 public class CustomQueue {
     
-    protected Queue<Task> myQueue;
+    protected Queue<TaskWrapper> myQueue;
     protected int size;
     
-    CustomQueue(int size) {
+    public CustomQueue(int size) {
         myQueue = new LinkedList<>();
         this.size = size;
     }
     
-    public synchronized boolean add(Task task) {
+    public synchronized boolean add(TaskWrapper task) {
         if (myQueue.size() < size)  {
             myQueue.add(task);    
             return true;
@@ -21,7 +21,7 @@ public class CustomQueue {
         else return false;
     }   
     
-    public synchronized Task poll() {
+    public synchronized TaskWrapper poll() {
             return myQueue.poll();
     }
     

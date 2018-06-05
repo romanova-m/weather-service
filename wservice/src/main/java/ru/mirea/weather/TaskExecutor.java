@@ -24,11 +24,20 @@ public class TaskExecutor implements Runnable{
     }
 
     private void execute(){
-        Task task = inQueue.poll();
+        TaskWrapper wrapper = null;
 
-        if (task != null) {
-            task.weather = DataSource.WEATHER.getByCity(task.city);
-            outQueue.add(task);
+        if (!inQueue.isEmpty()) {
+            synchronized (this) {
+                if (!inQueue.isEmpty()) wrapper = inQueue.poll();
+            }
+        }
+
+        if (wrapper != null) {
+            wrapper.task.weather = DataSource.WEATHER.getByCity(wrapper.task.city);
+
+            synchronized (outQueue) {
+                outQueue.add(wrapper);
+            }
         }
     }
 }

@@ -20,10 +20,13 @@ public class Logger implements Runnable {
     }
 
     private void print(){
+        TaskWrapper wrapper = null;
         if (!outQueue.isEmpty()) {
-            Task task = outQueue.poll();
-            System.out.println(task.id + " " + task.date + " " +
-                    task.city + " " + task.weather + " ");
+            synchronized (outQueue) {
+                if (!outQueue.isEmpty()) wrapper = outQueue.poll();
+            }
+            wrapper.ctx.channel().write(wrapper.task);
+            wrapper.ctx.channel().flush();
         }            
     }
 }
