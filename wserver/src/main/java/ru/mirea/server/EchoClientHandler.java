@@ -2,12 +2,16 @@ package ru.mirea.server;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import ru.mirea.weather.Task;
 
-public class EchoClientHandler extends SimpleChannelInboundHandler<String>{
+public class EchoClientHandler extends SimpleChannelInboundHandler<Task>{
 
     @Override
-    protected synchronized void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception{
-        System.out.println(msg + "\n");
+    protected void channelRead0(ChannelHandlerContext ctx, Task msg) throws Exception{
+
+        Task task = (Task) msg;
+
+        System.out.println("Task city 2:" + task.city + "\n");
 
     }
     /*private final ByteBuf firstMessage;

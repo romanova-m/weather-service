@@ -1,7 +1,8 @@
 package ru.mirea.weather;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Task {
+public class Task implements Serializable {
 
     public int id;
     public Date date;

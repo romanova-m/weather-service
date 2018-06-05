@@ -19,7 +19,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>ru.mirea.weather.App</mainClass>
+							<mainClass>ru.mirea.server.App</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
