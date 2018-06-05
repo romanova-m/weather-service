@@ -2,17 +2,20 @@ package ru.mirea.weather;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import io.netty.channel.ChannelHandlerContext;
 
 public class CustomQueueTest {
 
     CustomQueue testQueue;
     int testSize;
-    Task task;
+    TaskWrapper task;
+    ChannelHandlerContext ctx;
+    
 
     public CustomQueueTest() {
 	testSize = 3;
 	testQueue = new CustomQueue(testSize);
-	task = new Task(1, "Moscow");
+	task = new TaskWrapper(ctx, new Task(1, "Moscow"));
     }
 
     @Test
@@ -27,7 +30,7 @@ public class CustomQueueTest {
     @Test
     public void testPoll() {
         testQueue.myQueue.add(task);
-        Task polledTask = testQueue.poll();
+        TaskWrapper polledTask = testQueue.poll();
         assert(testQueue.myQueue.isEmpty());
         assertEquals(polledTask, task);
     }
