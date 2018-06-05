@@ -25,8 +25,10 @@ public class Logger implements Runnable {
             synchronized (outQueue) {
                 if (!outQueue.isEmpty()) wrapper = outQueue.poll();
             }
-            wrapper.ctx.channel().write(wrapper.task);
-            wrapper.ctx.channel().flush();
+            if (wrapper != null) {
+                wrapper.ctx.channel().write(wrapper.task);
+                wrapper.ctx.channel().flush();
+            }
         }            
     }
 }
