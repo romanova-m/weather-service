@@ -23,7 +23,6 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<Task>{
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Task msg) throws Exception {
 		Channel incoming = ctx.channel();
-		System.out.println("Task city:" + msg.city);
                 
 		ctx.channel().write(msg);
 		ctx.flush();

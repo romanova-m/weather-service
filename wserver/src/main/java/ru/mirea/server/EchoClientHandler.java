@@ -11,7 +11,8 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<Task>{
 
         Task task = (Task) msg;
 
-        System.out.println("Task city 2:" + task.city + "\n");
+        System.out.println("[id:" + task.id + "] " + task.date + " " +
+                task.city +" " + task.weather);
 
     }
     /*private final ByteBuf firstMessage;
