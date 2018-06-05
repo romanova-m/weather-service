@@ -19,9 +19,8 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<String>{
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
             Channel incoming = ctx.channel();
-		ctx.channel().write("["+incoming.remoteAddress()+ "] ID" + ++id + " " +
+		ctx.channel().writeAndFlush("["+incoming.remoteAddress()+ "] ID" + ++id + " " +
 				new Date() + ":" + msg + " " + DataSource.WEATHER.getByCity(msg)+ "\r\n");
-		ctx.flush();
 	}
 
 

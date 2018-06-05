@@ -8,7 +8,6 @@ import io.netty.channel.Channel;
 import java.util.Random;
 
 public class TaskGenerator implements Runnable {
-
     Channel channel;
 
     public TaskGenerator(Channel channel) {
@@ -17,14 +16,19 @@ public class TaskGenerator implements Runnable {
 
     @Override
     public void run() {
+        int id = 0;
+        try {
         while (!Thread.interrupted()) {
             Random rand = new Random();
-            String city;
-                city = DataSource.WEATHER.cities().toArray()[rand.nextInt(
-                        DataSource.WEATHER.cities().size() - 1) + 0].toString();
-                channel.write(city + "\r\n");
-                channel.flush();
+            String city = DataSource.WEATHER.cities().toArray()[rand.nextInt(
+                    DataSource.WEATHER.cities().size() - 1) + 0].toString();
+            Task task = new Task(++id, city);
+            System.out.println(task.id + " " + task.city);
+            channel.write(task.city + "\r\n");
+            channel.flush();
+            Thread.sleep(5);
             }
+        } catch (InterruptedException e) {}
     }
 }
 
