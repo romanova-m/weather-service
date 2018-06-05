@@ -19,22 +19,24 @@ import ru.mirea.weather.TaskWrapper;
 
 public class EchoServerHandler extends SimpleChannelInboundHandler<Task>{
 
-		private static final ChannelGroup channels = new DefaultChannelGroup(
+    private static final ChannelGroup channels = new DefaultChannelGroup(
 			(EventExecutor) new DefaultEventExecutor());
         int id = 0;
         static int size = 100;
 
         private static CustomQueue inQueue = new CustomQueue(size);
-		private static CustomQueue outQueue = new CustomQueue(size);
-public EchoServerHandler() {
+	private static CustomQueue outQueue = new CustomQueue(size);
+        
+        public EchoServerHandler() {
+            
 	TaskExecutor te = new TaskExecutor(inQueue, outQueue);
 	Logger lg = new Logger(outQueue);
 	Thread tte = new Thread(te);
 	Thread tlg = new Thread(lg);
-	tte.run();
-	tlg.run();
+	tte.start();
+	tlg.start();
 	try {
-		Thread.sleep(10000);
+		Thread.sleep(1000);
 	} catch (InterruptedException e) {
 		e.printStackTrace();
 	}
@@ -42,7 +44,7 @@ public EchoServerHandler() {
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Task msg) throws Exception {
-		//Channel incoming = ctx.channel();
+		Channel incoming = ctx.channel();
 
 		synchronized (inQueue) {
 			inQueue.add(new TaskWrapper(msg, ctx));
