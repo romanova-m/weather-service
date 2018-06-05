@@ -24,8 +24,8 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<Task>{
         int id = 0;
         static int size = 100;
 
-        private static CustomQueue inQueue = new CustomQueue(size);
-		private static CustomQueue outQueue = new CustomQueue(size);
+        private static volatile CustomQueue inQueue = new CustomQueue(size);
+		private static volatile CustomQueue outQueue = new CustomQueue(size);
 
 	TaskExecutor te = new TaskExecutor(inQueue, outQueue);
 	Logger lg = new Logger(outQueue);
