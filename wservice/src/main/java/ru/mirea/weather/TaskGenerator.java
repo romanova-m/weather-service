@@ -1,32 +1,34 @@
 package ru.mirea.weather;
 
 import ru.mirea.data.DataSource;
+import ru.mirea.weather.CustomQueue;
+import ru.mirea.weather.Task;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.Channel;
+import java.util.Random;
 
 public class TaskGenerator implements Runnable {
+    Channel channel;
 
-    private CustomQueue inQueue;
-    private int id = 0;
-
-    public TaskGenerator(CustomQueue inQueue) {
-        this.inQueue = inQueue;
+    public TaskGenerator(Channel channel) {
+        this.channel = channel;
     }
 
     @Override
     public void run() {
+        int id = 0;
         try {
-            while (!Thread.interrupted()) {
-                for (String city : DataSource.WEATHER.cities()) {
-                    putTaskInQueue(city);
-                    Thread.sleep(10);
-                }
+        while (!Thread.interrupted()) {
+            Random rand = new Random();
+            String city = DataSource.WEATHER.cities().toArray()[rand.nextInt(
+                    DataSource.WEATHER.cities().size() - 1) + 0].toString();
+            Task task = new Task(++id, city);
+            System.out.println(task.id + " " + task.city);
+            channel.write(task.city + "\r\n");
+            channel.flush();
+            Thread.sleep(5);
             }
         } catch (InterruptedException e) {}
-    }
-
-    private void putTaskInQueue(String city) {
-        Task task = new Task(id, city);
-        inQueue.add(task);
-        id++;
     }
 }
 

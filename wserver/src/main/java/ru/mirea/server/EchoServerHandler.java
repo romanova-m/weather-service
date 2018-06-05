@@ -26,6 +26,12 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<Task>{
 		System.out.println("Task city:" + msg.city);
 		ctx.channel().write(msg);
 		ctx.flush();
+/*
+	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+            Channel incoming = ctx.channel();
+		ctx.channel().writeAndFlush("["+incoming.remoteAddress()+ "] ID" + ++id + " " +
+				new Date() + ":" + msg + " " + DataSource.WEATHER.getByCity(msg)+ "\r\n");
+*/
 	}
 
 

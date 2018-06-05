@@ -1,5 +1,6 @@
 package ru.mirea.server;
 
+
 import ru.mirea.data.DataSource;
 import ru.mirea.weather.Task;
 import io.netty.bootstrap.Bootstrap;
@@ -7,6 +8,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import ru.mirea.weather.TaskGenerator;
 
 import java.util.Random;
 
@@ -29,20 +31,19 @@ public final class EchoClient implements Runnable{
             // Start the client.
             Channel channel = b.connect(host, port).sync().channel();
 
-            //while (!Thread.interrupted()) {
-            for (int i = 0; i < 10; i++){
-               /* Random rand = new Random();
-                String city;
-                    city = DataSource.WEATHER.cities().toArray()[rand.nextInt(
-                            DataSource.WEATHER.cities().size() - 1) + 0].toString();
-                    channel.write(city + "\r\n");
-                    channel.flush();
-                    */
-                Task task = new Task(0, "Moscow");
+            //BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            
+            Thread genStream = new Thread(new TaskGenerator(channel));
+            genStream.start();
+            Thread.sleep(3000);
+            genStream.interrupt();
 
-                channel.write(task);
-                channel.flush();
-            }
+            //КАК ПОСЫЛАТЬ ТАСКИ -----------------------------------
+            Task task = new Task(0, "Moscow");
+
+            channel.write(task);
+            channel.flush();
+            //КАК ПОСЫЛАТЬ ТАСКИ -----------------------------------
 
             // Wait until the connection is closed.
             channel.closeFuture().sync();
