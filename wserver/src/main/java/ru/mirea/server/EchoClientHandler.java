@@ -8,6 +8,7 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<Task>{
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Task msg) throws Exception{
+        
 
         Task task = (Task) msg;
 

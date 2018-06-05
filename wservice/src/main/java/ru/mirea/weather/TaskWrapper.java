@@ -5,11 +5,11 @@ import ru.mirea.weather.Task;
 
 public class TaskWrapper {
 
-    public Task task;
     public ChannelHandlerContext ctx;
+    public Task task;
 	
-    public TaskWrapper(Task task, ChannelHandlerContext ctx) {
-	    this.task=task;
+    public TaskWrapper( Task task, ChannelHandlerContext ctx) {
         this.ctx=ctx;
+        this.task=task;
     }
 }

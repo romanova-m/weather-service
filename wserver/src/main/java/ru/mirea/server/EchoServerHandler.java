@@ -13,6 +13,9 @@ import java.math.BigInteger;
 import java.util.Date;
 import io.netty.channel.Channel;
 import ru.mirea.weather.*;
+import ru.mirea.weather.Task;
+import ru.mirea.weather.CustomQueue;
+import ru.mirea.weather.TaskWrapper;
 
 public class EchoServerHandler extends SimpleChannelInboundHandler<Task>{
 
@@ -44,6 +47,13 @@ public EchoServerHandler() {
 		synchronized (inQueue) {
 			inQueue.add(new TaskWrapper(msg, ctx));
 		}
+
+/*
+	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+            Channel incoming = ctx.channel();
+		ctx.channel().writeAndFlush("["+incoming.remoteAddress()+ "] ID" + ++id + " " +
+				new Date() + ":" + msg + " " + DataSource.WEATHER.getByCity(msg)+ "\r\n");
+*/
 
 	}
 

@@ -2,41 +2,44 @@ package ru.mirea.weather;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import io.netty.channel.ChannelHandlerContext;
 
 public class CustomQueueTest {
 
-   /* CustomQueue testQueue;
+    CustomQueue testQueue;
     int testSize;
-    Task wrapper;
+
+    TaskWrapper task;
+    ChannelHandlerContext ctx;
+
 
     public CustomQueueTest() {
-	testSize = 3;
-	testQueue = new CustomQueue(testSize);
-	task = new Task(1, "Moscow");
-	wrapper = new TaskWrapper ();
+        testSize = 3;
+        testQueue = new CustomQueue(testSize);
+        task = new TaskWrapper(new Task(1, "Moscow"),ctx);
     }
 
     @Test
     public void testAdd() {
-	testQueue.add(wrapper);
-	testQueue.add(wrapper);
-	testQueue.add(wrapper);
-	assertFalse(testQueue.add(wrapper));
-	assertEquals(testQueue.myQueue.size(), testSize);
+        testQueue.add(task);
+        testQueue.add(task);
+        testQueue.add(task);
+        assertFalse(testQueue.add(task));
+        assertEquals(testQueue.myQueue.size(), testSize);
     }
 
     @Test
     public void testPoll() {
-        testQueue.myQueue.add(wrapper);
-        Task polledTask = testQueue.poll();
+        testQueue.myQueue.add(task);
+        TaskWrapper polledTask = testQueue.poll();
         assert(testQueue.myQueue.isEmpty());
-        assertEquals(polledTask, wrapper);
+        assertEquals(polledTask, task);
     }
 
     @Test
     public void testIsEmpty() {
         assertTrue(testQueue.isEmpty());
-        testQueue.myQueue.add(wrapper);
+        testQueue.myQueue.add(task);
         assertFalse(testQueue.isEmpty());
         testQueue.myQueue.poll();
         assertTrue(testQueue.isEmpty());
@@ -45,7 +48,7 @@ public class CustomQueueTest {
     @Test
     public void testSize() {
         assertTrue(testQueue.size() == 0);
-        testQueue.myQueue.add(wrapper);
+        testQueue.myQueue.add(task);
         assertTrue(testQueue.size() == 1);
-    }*/
+    }
 }
