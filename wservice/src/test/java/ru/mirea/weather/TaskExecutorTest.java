@@ -3,7 +3,9 @@ package ru.mirea.weather;
 import io.netty.channel.ChannelHandlerContext;
 import org.junit.Test;
 import org.junit.Before;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class TaskExecutorTest {
@@ -29,18 +31,4 @@ public class TaskExecutorTest {
     public void inQueueIsEmpty() {
 	assertTrue(inQueue.isEmpty());
     }
-
-    @Test
-    public void outQueueContainsOneTask() {
-        inQueue.add(task);
-        Thread excStream = new Thread(new TaskExecutor(inQueue, outQueue));
-        excStream.start();
-        try {
-            excStream.sleep(2000);
-        } catch (InterruptedException e) {}
-        excStream.interrupt();
-        assertEquals(outQueue.size(), 1);
-        assertEquals(outQueue.poll().task.city, task.task.city);
-    }
-    
 }

@@ -1,13 +1,15 @@
 package ru.mirea.data;
 
 import java.io.IOException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-import org.jsoup.nodes.Element;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 
 public enum DataSource implements DataSourceAPI {
 

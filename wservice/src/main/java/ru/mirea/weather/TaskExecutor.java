@@ -27,7 +27,7 @@ public class TaskExecutor implements Runnable{
         TaskWrapper wrapper = null;
 
         if (!inQueue.isEmpty()) {
-            synchronized (this) {
+            synchronized (inQueue) {
                 if (!inQueue.isEmpty()) wrapper = inQueue.poll();
             }
         }
