@@ -36,7 +36,7 @@ public class TaskExecutorTest {
         Thread excStream = new Thread(new TaskExecutor(inQueue, outQueue));
         excStream.start();
         try {
-            excStream.sleep(1000);
+            excStream.sleep(2000);
         } catch (InterruptedException e) {}
         excStream.interrupt();
         assertEquals(outQueue.size(), 1);
