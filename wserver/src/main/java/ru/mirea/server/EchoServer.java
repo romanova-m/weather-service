@@ -62,52 +62,14 @@ public final class EchoServer implements Runnable {
 		} catch (InterruptedException e){}
 		finally {
 			tte.interrupt();
+			tte1.interrupt();
+			tte2.interrupt();
 			tlg.interrupt();
-			//TO REMOVE
-			String url = "https://yandex.ru/pogoda/moscow";
 
-			URL obj = null;
-			try {
-				obj = new URL(url);
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
-			HttpURLConnection connection = null;
-			try {
-				connection = (HttpURLConnection) obj.openConnection();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			try {
-				connection.setRequestMethod("GET");
-			} catch (ProtocolException e) {
-				e.printStackTrace();
-			}
-
-			BufferedReader in = null;
-			try {
-				in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			String inputLine;
-			StringBuffer response = new StringBuffer();
-			try {
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-
-				in.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			System.out.println(response.toString());
-			//TO REMOVE
 			// Shut down all event loops to terminate all threads.
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
 		}
 	}
+
 }
