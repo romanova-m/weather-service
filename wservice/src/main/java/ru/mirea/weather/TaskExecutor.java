@@ -5,8 +5,8 @@ import ru.mirea.data.DataSource;
 
 public class TaskExecutor implements Runnable{
 
-    CustomQueue inQueue;
-    CustomQueue outQueue;
+    private CustomQueue inQueue;
+    private CustomQueue outQueue;
 
     public TaskExecutor(CustomQueue inQueue, CustomQueue outQueue){
         this.inQueue = inQueue;

@@ -9,8 +9,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.concurrent.DefaultEventExecutor;
 import io.netty.util.concurrent.EventExecutor;
 
-import java.math.BigInteger;
-import java.util.Date;
 import io.netty.channel.Channel;
 import ru.mirea.weather.*;
 import ru.mirea.weather.Task;
@@ -22,31 +20,10 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<Task>{
     private static final ChannelGroup channels = new DefaultChannelGroup(
 			(EventExecutor) new DefaultEventExecutor());
         int id = 0;
-        static int size = 100;
+        CustomQueue inQueue;
 
-        private static CustomQueue inQueue = new CustomQueue(size);
-		private static CustomQueue outQueue = new CustomQueue(size);
-
-	TaskExecutor te = new TaskExecutor(inQueue, outQueue);
-	Logger lg = new Logger(outQueue);
-	Thread tte = new Thread(te);
-	Thread tlg = new Thread(lg);
-
-	@Override
-	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-		tte.interrupt();
-		tlg.interrupt();
-		super.channelUnregistered(ctx);
-	}
-
-	public EchoServerHandler() {
-	tte.start();
-	tlg.start();
-	/*try {
-		Thread.sleep(1000);
-	} catch (InterruptedException e) {
-		e.printStackTrace();
-	}*/
+	public EchoServerHandler(CustomQueue inQueue) {
+		this.inQueue = inQueue;
 	}
 
 	@Override
